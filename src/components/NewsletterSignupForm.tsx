@@ -21,18 +21,20 @@ export default function NewsletterSignUp() {
 
     return (
         <section className='flex flex-col  gap-4'>
-            <h1>Nyhedsbrev</h1>
-            <p>Få direkte besked når vi har sæsonstart eller afholder arrangementer</p>
+            <h3>Sign up for our newsletter</h3>
+            <p>Sign up to receive the latest news and  announcements from Believe Fitness</p>
             <form action={formAction} noValidate className='flex w-full gap-4 justify-between'>
                 <input
                     type='email'
                     name='email'
-                    placeholder='Indtast din email'
-                    className='border border-gray-300 w-full rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
+                    placeholder='Indtast din email...'
+                    className='border border-gray-300 w-full rounded-full py-2 px-5 focus:outline-none focus:ring-2 focus:ring-blue-500'
                     required
                 />
 
-                <Button type='submit'>Tilmeld</Button>
+                <Button type='submit' className='font-semibold'>
+                    SIGN UP
+                </Button>
             </form>
             {state.errors?.length > 0 && (
                 <p className='text-red-500 text-center text-sm mt-1'>{state.errors[0]}</p>

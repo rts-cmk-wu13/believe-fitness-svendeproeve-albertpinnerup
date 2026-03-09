@@ -14,7 +14,7 @@ export default async function DashboardHero() {
                 {/* container */}
                 <div className='w-full h-full p-5 bg-black/40 z-20 relative flex flex-col gap-6'>
                     <h2 className='text-secondary font-bold mt-auto'>Welcome to Believe Fitness</h2>
-                    <div>
+                    <div className='flex gap-2'>
                         <Link href='/classes'>
                             <Button>CLASSES</Button>
                         </Link>

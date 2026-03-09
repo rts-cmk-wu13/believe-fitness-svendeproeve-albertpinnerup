@@ -1,4 +1,3 @@
-import { NewsType } from '@/lib/types';
 import Image from 'next/image';
 
 type NewsArticleProps = {

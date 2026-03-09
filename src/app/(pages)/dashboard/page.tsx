@@ -1,5 +1,6 @@
 import DashboardHero from '@/components/DashboardHero';
 import NewsArticle from '@/components/NewsArticle';
+import NewsletterSignUp from '@/components/NewsletterSignupForm';
 import { NewsType } from '@/lib/types';
 import { fetchUtil } from '@/lib/utils';
 
@@ -21,6 +22,9 @@ export default async function dashboard() {
                         />
                     ))}
                 </div>
+
+                <hr className='w-[40px] h-0.5 bg-black mx-auto my-4' />
+                <NewsletterSignUp />
             </section>
         </main>
     );
