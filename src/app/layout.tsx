@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono, Poppins } from 'next/font/google';
 import './globals.css';
+import { ToastContainer } from 'react-toastify';
 
 const poppins = Poppins({
     weight: ['300', '400', '500', '700'],
@@ -20,7 +21,10 @@ export default function RootLayout({
 }>) {
     return (
         <html lang='en'>
-            <body className={`${poppins.className} antialiased`}>{children}</body>
+            <body className={`${poppins.className} antialiased`}>
+                {children}
+                <ToastContainer />
+            </body>
         </html>
     );
 }

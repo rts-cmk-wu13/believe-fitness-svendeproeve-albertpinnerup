@@ -28,7 +28,7 @@ export default function NewsletterSignUp() {
                     type='email'
                     name='email'
                     placeholder='Indtast din email...'
-                    className='border border-gray-300 w-full rounded-full py-2 px-5 focus:outline-none focus:ring-2 focus:ring-blue-500'
+                    className='border border-gray-300 w-full rounded-full py-3 px-5 focus:outline-none focus:ring-2 focus:ring-blue-500'
                     required
                 />
 
