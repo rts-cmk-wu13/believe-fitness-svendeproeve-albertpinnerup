@@ -1,14 +1,13 @@
-import assets from '@/lib/dal/assets';
 import Image from 'next/image';
 import heroImage from '../../public/welcome.jpg';
 import Link from 'next/link';
 import { Button } from './ui/button';
+import { fetchUtil } from '@/lib/utils';
 
 export default async function DashboardHero() {
-    const imgUrl = await assets();
+    const articles = await fetchUtil('news');
 
-    console.log(imgUrl);
-
+    console.log(articles);
     return (
         <section>
             <div className='relative aspect-410/324'>
