@@ -1,6 +1,7 @@
 import DashboardHero from '@/components/DashboardHero';
 import NewsArticle from '@/components/NewsArticle';
 import NewsletterSignUp from '@/components/NewsletterSignupForm';
+import Testimonials from '@/components/Testimonials';
 import { NewsType } from '@/lib/types';
 import { fetchUtil } from '@/lib/utils';
 
@@ -26,6 +27,7 @@ export default async function dashboard() {
                 <hr className='w-[40px] h-0.5 bg-black mx-auto my-4' />
                 <NewsletterSignUp />
             </section>
+            <Testimonials />
         </main>
     );
 }
