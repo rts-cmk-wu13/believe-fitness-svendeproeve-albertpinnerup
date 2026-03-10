@@ -34,7 +34,7 @@ export default async function dashboard() {
                 </section>
                 <hr className='w-[40px] h-0.5 bg-black mx-auto my-4' />
             </main>
-            <footer>
+            <footer className='mb-8'>
                 <section className='flex flex-col items-center gap-2'>
                     <h2 className='text-secondary'>Believe Fitness</h2>
                     <h4>Train like a pro</h4>

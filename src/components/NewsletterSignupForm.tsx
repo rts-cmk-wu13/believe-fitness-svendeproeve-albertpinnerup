@@ -37,7 +37,7 @@ export default function NewsletterSignUp() {
                 </Button>
             </form>
             {state.errors?.length > 0 && (
-                <p className='text-red-500 text-center text-sm mt-1'>{state.errors[0]}</p>
+                <p className='text-red-500 text-sm mt-1'>{state.errors[0]}</p>
             )}
         </section>
     );

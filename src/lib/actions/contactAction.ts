@@ -30,7 +30,7 @@ export default async function contactAction(
 
     console.log('Validation result:', result);
 
-    await fetch(`http://localhost:4000/api/v1/messages`, {
+    await fetch(`${process.env.API_URL}/messages`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

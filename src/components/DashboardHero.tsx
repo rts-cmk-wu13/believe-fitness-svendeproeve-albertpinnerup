@@ -19,7 +19,7 @@ export default async function DashboardHero() {
                             <Button>CLASSES</Button>
                         </Link>
                         <Link href='/login'>
-                            <Button>CLASSES</Button>
+                            <Button>LOG IN</Button>
                         </Link>
                     </div>
                 </div>
