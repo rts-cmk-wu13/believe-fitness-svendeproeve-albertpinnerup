@@ -1,30 +1,24 @@
-import type { Metadata } from 'next';
-import { Poppins } from 'next/font/google';
+'use client';
+
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import '@/app/globals.css';
 import Menu from '@/components/Menu';
-
-const poppins = Poppins({
-    weight: ['300', '400', '500', '700'],
-    style: ['normal', 'italic'],
-    subsets: ['latin'],
-});
-
-export const metadata: Metadata = {
-    title: 'Believe Fitness',
-    description: 'Believe Fitness - Train like a pro',
-};
+import { usePathname } from 'next/navigation';
 
 export default function MainLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) {
+    const pathName = usePathname();
+    const isActive = (href: string) => pathName === href || pathName.includes(`${href}/`);
     return (
-        <SidebarProvider>
+        <SidebarProvider defaultOpen={false}>
             <Menu />
             {/* <SidebarTrigger /> */}
-            <SidebarInset>{children}</SidebarInset>
+            <SidebarInset className={isActive('/dashboard') ? 'mt-0' : 'mt-[76px]'}>
+                {children}
+            </SidebarInset>
         </SidebarProvider>
     );
 }

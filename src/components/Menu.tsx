@@ -23,21 +23,27 @@ const navItems: NavItem[] = [
     { id: 'home', label: 'Home', href: '/dashboard' },
     { id: 'classes', label: 'Popular Classes', href: '/classes' },
     { id: 'seach', label: 'Search', href: '/search' },
-    { id: 'profile', label: 'Profile', href: '/profile' },
+    { id: 'profile', label: 'My Profile', href: '/profile' },
     { id: 'logout', label: 'Log Out', href: '/login' },
 ];
 
 export default function Menu() {
-    const { toggleSidebar } = useSidebar();
+    const { toggleSidebar, setOpenMobile } = useSidebar();
     const pathName = usePathname();
     const isActive = (href: string) => pathName === href || pathName.includes(`${href}/`);
+
+    const currentPage = navItems.find((item: NavItem) => item.href === pathName);
 
     const openMenuIconColor = pathName.includes('/dashboard') ? '#fff' : '#9E9E9E';
     return (
         <>
-            <button className='absolute z-50 right-5 top-6' onClick={toggleSidebar}>
-                <TextAlignEnd color={openMenuIconColor} />
-            </button>
+            <div className='absolute w-full px-5 py-6 z-50 flex justify-between'>
+                {!isActive('/dashboard') && <h3 className='font-normal'>{currentPage?.label}</h3>}
+
+                <button onClick={toggleSidebar} className='ml-auto'>
+                    <TextAlignEnd color={openMenuIconColor} />
+                </button>
+            </div>
             <Sidebar collapsible='offcanvas' variant='inset' side='right'>
                 {/* <SidebarHeader /> */}
                 <button className='absolute z-50 right-5 top-6' onClick={toggleSidebar}>
@@ -50,7 +56,10 @@ export default function Menu() {
                                 const active = isActive(item.href);
                                 return (
                                     <SidebarMenuItem key={item.id}>
-                                        <SidebarMenuButton asChild onClick={toggleSidebar}>
+                                        <SidebarMenuButton
+                                            asChild
+                                            onClick={() => setOpenMobile(false)}
+                                        >
                                             <Link href={item.href}>
                                                 <h3
                                                     className={`${active ? 'font-bold' : 'font-normal'}`}
