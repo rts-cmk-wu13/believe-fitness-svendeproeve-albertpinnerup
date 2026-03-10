@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
-import { ToastContainer } from 'react-toastify';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import '@/app/globals.css';
 import Menu from '@/components/Menu';
@@ -16,17 +15,16 @@ export const metadata: Metadata = {
     description: 'Believe Fitness - Train like a pro',
 };
 
-export default function RootLayout({
+export default function MainLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) {
     return (
-        <html lang='en'>
-            <body className={`${poppins.className} antialiased`}>
-                {children}
-                <ToastContainer />
-            </body>
-        </html>
+        <SidebarProvider>
+            <Menu />
+            {/* <SidebarTrigger /> */}
+            <SidebarInset>{children}</SidebarInset>
+        </SidebarProvider>
     );
 }

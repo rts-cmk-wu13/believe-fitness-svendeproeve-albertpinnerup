@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     description: 'Believe Fitness - Train like a pro',
 };
 
-export default function RootLayout({
+export default function MainLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
@@ -24,7 +24,12 @@ export default function RootLayout({
     return (
         <html lang='en'>
             <body className={`${poppins.className} antialiased`}>
-                {children}
+                <SidebarProvider>
+                    <Menu />
+                    {/* <SidebarTrigger /> */}
+                    <SidebarInset>{children}</SidebarInset>
+                </SidebarProvider>
+
                 <ToastContainer />
             </body>
         </html>
