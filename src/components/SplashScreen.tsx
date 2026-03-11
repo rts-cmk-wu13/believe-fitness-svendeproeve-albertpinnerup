@@ -1,0 +1,31 @@
+import Link from 'next/link';
+import Image from 'next/image';
+import { Button } from './ui/button';
+
+export default function SplashScreen() {
+    const randomizer = Math.floor(Math.random() * 2);
+
+    const imgUrl = randomizer ? '/splash1.jpg' : '/splash2.png';
+
+    return (
+        <section className='relative z-10 p-6 pb-12 flex min-h-svh w-full flex-col items-center justify-between gap-6 overflow-hidden font-sans'>
+            <Image
+                src={imgUrl}
+                alt='Hero Image'
+                fill={true}
+                className='-z-10 object-cover'
+                priority
+            />
+
+            <div className='w-full flex flex-col mt-auto mb-4 gap-4 z-10'>
+                <h1 className='font-bold text-secondary text-6xl'>Believe Fitness</h1>
+                <h2 className='text-background text-xl'>Train like a pro</h2>
+            </div>
+            <Link href='/dashboard' className='z-10 '>
+                <Button className='z-10 mt-auto animate-in slide-in-from-left duration-700'>
+                    START TRAINING
+                </Button>
+            </Link>
+        </section>
+    );
+}
