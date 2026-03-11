@@ -4,8 +4,9 @@ import toggleClassParticipation from '@/lib/actions/signUpClassAction';
 import { ClassesType, TrainerType } from '@/lib/types';
 import { Star } from 'lucide-react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useState, useTransition } from 'react';
+import TrainersCard from './TrainersCard';
+import { useRouter } from 'next/navigation';
 
 const maxRating = 5;
 
@@ -16,20 +17,20 @@ export default function ClassDetailsClient({
     role,
     rating,
     trainer,
+    isAuthenticated,
 }: {
     classSingle: ClassesType;
     classId: ClassesType['id'];
     initialJoinedState: boolean;
-    role: string;
+    role?: string;
     isAuthenticated: boolean;
     rating: number;
     trainer: TrainerType;
 }) {
     const [joined, setJoined] = useState(initialJoinedState);
 
-    console.log('role', role);
-
     const [isPending, startTransition] = useTransition();
+    const router = useRouter();
 
     const disabled = isPending || role === 'admin';
 
@@ -92,27 +93,26 @@ export default function ClassDetailsClient({
                     </p>
                     <p>{classSingle?.classDescription}</p>
                 </div>
-                <section className='flex flex-col gap-4'>
-                    <h4>Trainer</h4>
-                    <div className='flex items-center gap-4'>
-                        <Image
-                            src={trainer.asset.url}
-                            alt={trainer.trainerName}
-                            width={88}
-                            height={88}
-                            className='rounded-xl overflow-hidden aspect-square object-cover object-top'
-                        />
-                        <p className='font-semibold'>{trainer.trainerName}</p>
-                    </div>
-                </section>
-                <Button
-                    className='z-50 w-full mt-auto'
-                    variant={'secondary'}
-                    disabled={disabled}
-                    onClick={onToggle}
-                >
-                    {joined ? 'LEAVE CLASS' : 'SIGN UP'}
-                </Button>
+                <h4>Trainer</h4>
+                <TrainersCard trainer={trainer} />
+                {isAuthenticated ? (
+                    <Button
+                        className='z-50 w-full mt-auto'
+                        variant={'secondary'}
+                        disabled={disabled}
+                        onClick={onToggle}
+                    >
+                        {joined ? 'LEAVE CLASS' : 'SIGN UP'}
+                    </Button>
+                ) : (
+                    <Button
+                        className='z-50 w-full mt-auto'
+                        variant={'secondary'}
+                        onClick={() => router.replace('/login')}
+                    >
+                        {joined ? 'LEAVE CLASS' : 'SIGN UP'}
+                    </Button>
+                )}
             </section>
         </>
     );

@@ -1,5 +1,5 @@
 import SearchClient from '@/components/SearchClient';
-import { ClassesType } from '@/lib/types';
+import { ClassesType, TrainerType } from '@/lib/types';
 import { fetchUtil } from '@/lib/utils';
 
 export default async function SearchPage() {
@@ -10,5 +10,7 @@ export default async function SearchPage() {
         })
     );
 
-    return <SearchClient classes={classesData} ratingsArr={ratingsArr} />;
+    const trainersData: TrainerType[] = await fetchUtil('trainers');
+
+    return <SearchClient classes={classesData} ratingsArr={ratingsArr} trainers={trainersData} />;
 }

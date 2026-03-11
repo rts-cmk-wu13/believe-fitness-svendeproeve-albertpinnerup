@@ -1,4 +1,5 @@
 import ClassDetailsClient from '@/components/ClassDetailsClient';
+import { checkAuthentication } from '@/lib/auth';
 import getUser from '@/lib/dal/user';
 import { ClassesType, RatingType, TrainerType } from '@/lib/types';
 import { fetchUtil } from '@/lib/utils';
@@ -24,7 +25,18 @@ export default async function classesDetailsPage({ params }: { params: Promise<{
     }
     const userId = cookieStore.get('userId')?.value;
 
-    const user = await getUser();
+    /* const user = await getUser(); */
+
+    const isAuthenticated = await checkAuthentication();
+
+    let user;
+
+    if (isAuthenticated) {
+        user = await getUser();
+    } else {
+        user = 'default';
+    }
+
     const initialJoinedState =
         classSingle?.users?.some((user) => user.id === Number(userId)) || false;
 
@@ -45,7 +57,7 @@ export default async function classesDetailsPage({ params }: { params: Promise<{
             classId={classId}
             initialJoinedState={initialJoinedState}
             role={user.role}
-            isAuthenticated={user}
+            isAuthenticated={isAuthenticated}
             rating={roundedRating}
             trainer={trainer}
         />

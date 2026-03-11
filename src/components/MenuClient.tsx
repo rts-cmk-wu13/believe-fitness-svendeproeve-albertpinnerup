@@ -42,10 +42,10 @@ export default function MenuClient({ isAuthentictated }: { isAuthentictated: boo
         <>
             <div className='absolute w-full px-5 py-6 z-50 flex justify-between'>
                 {!isActive('/dashboard') && (
-                    <div>
-                        {pathnameArr.length > 2 && (
+                    <div className='flex items-center gap-2'>
+                        {(pathnameArr.length > 2 || pathName.includes('/search')) && (
                             <ArrowLeft
-                                size={30}
+                                size={24}
                                 onClick={() => router.back()}
                                 className='z-20  relative'
                                 color={openMenuIconColor}
