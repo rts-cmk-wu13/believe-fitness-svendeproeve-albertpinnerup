@@ -1,4 +1,6 @@
-import { ClassesType } from '@/lib/types';
+import ClassDetailsClient from '@/components/ClassDetailsClient';
+import getUser from '@/lib/dal/user';
+import { ClassesType, RatingType, TrainerType } from '@/lib/types';
 import { fetchUtil } from '@/lib/utils';
 import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
@@ -22,8 +24,30 @@ export default async function classesDetailsPage({ params }: { params: Promise<{
     }
     const userId = cookieStore.get('userId')?.value;
 
+    const user = await getUser();
     const initialJoinedState =
         classSingle?.users?.some((user) => user.id === Number(userId)) || false;
 
-    return <h1>{id} classes details</h1>;
+    const ratingsData = await fetchUtil(`classes/${classId}/ratings`);
+
+    const avgRating = ratingsData.length
+        ? ratingsData.reduce((sum: number, current: RatingType) => sum + current.rating, 0) /
+          ratingsData.length
+        : 0;
+
+    const roundedRating = Math.ceil(avgRating);
+
+    const trainer: TrainerType = await fetchUtil(`trainers/${classSingle.trainerId}`);
+
+    return (
+        <ClassDetailsClient
+            classSingle={classSingle}
+            classId={classId}
+            initialJoinedState={initialJoinedState}
+            role={user.role}
+            isAuthenticated={user}
+            rating={roundedRating}
+            trainer={trainer}
+        />
+    );
 }

@@ -29,7 +29,7 @@ export const userSchema = z.object({
     password: z.string().min(4, { message: 'Password must be at least 6 characters' }),
     userFirstName: z.string().min(2, { message: 'First name must be at least 2 characters' }),
     userLastName: z.string().min(2, { message: 'Last name must be at least 2 characters' }),
-    rememberMe: z.string().optional(),
+    rememberMe: z.coerce.boolean().optional(),
 });
 
 export type UserFormData = z.infer<typeof userSchema>;
@@ -44,7 +44,7 @@ export type SignUpErrors = {
 export const logInSchema = z.object({
     username: z.string().min(3, { message: 'Username must be at least 3 characters' }),
     password: z.string().min(4, { message: 'Password must be at least 6 characters' }),
-    rememberMe: z.boolean().optional(),
+    rememberMe: z.coerce.boolean().optional(),
 });
 
 export type LogInData = z.infer<typeof logInSchema>;

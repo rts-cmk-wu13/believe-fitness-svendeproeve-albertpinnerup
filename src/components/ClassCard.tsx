@@ -14,7 +14,9 @@ const maxRating = 5;
 
 export default function ClassesCard({ imgUrl, id, title, rating, heroCard }: ClassesCardProps) {
     return (
-        <div className='rounded-2xl relative rounded-br-none overflow-hidden w-full'>
+        <div
+            className={`rounded-2xl relative ${!heroCard && 'rounded-br-none'} overflow-hidden w-full`}
+        >
             <Link href={`classes/${id}`} className='flex flex-col gap-4 aspect-128/145'>
                 <Image
                     src={imgUrl}

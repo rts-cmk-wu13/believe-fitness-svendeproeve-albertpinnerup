@@ -29,10 +29,9 @@ export type ClassesType = {
     users: UserType[];
 };
 
-export type TrainerType = {
-    assetId: number;
-    id: number;
-    trainerNamer: string;
+export type ClassWithRatings = {
+    classItem: ClassesType;
+    ratings: RatingType[];
 };
 
 export type UserType = Omit<UserFormData, 'rememberMe' | 'password'> & {
@@ -41,4 +40,19 @@ export type UserType = Omit<UserFormData, 'rememberMe' | 'password'> & {
         userId: number;
     };
     id: number;
+};
+
+export type RatingType = {
+    id: number;
+    rating: number;
+    userId: number;
+    classId: number;
+};
+
+export type TrainerType = {
+    id: number;
+    trainerName: string;
+    assetId: number;
+    classItem: Omit<ClassesType, 'users' | 'asset' | 'trainer'>;
+    asset: AssetType;
 };

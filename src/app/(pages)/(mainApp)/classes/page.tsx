@@ -1,13 +1,7 @@
 import ClassesCard from '@/components/ClassCard';
-import { ClassesType } from '@/lib/types';
+import ClassesCardListClient from '@/components/ClassesCardList';
+import { ClassesType, ClassWithRatings, RatingType } from '@/lib/types';
 import { fetchUtil } from '@/lib/utils';
-
-type RatingType = {
-    id: number;
-    rating: number;
-    userId: number;
-    classId: number;
-};
 
 export default async function ClassesPage() {
     const classesData: ClassesType[] = await fetchUtil('classes');
@@ -24,48 +18,35 @@ export default async function ClassesPage() {
 
     const randomRoundedRating = Math.ceil(randomAvg);
 
+    const ratingsArr = await Promise.all(
+        Array.from(classesData, (classItem: ClassesType, i) => {
+            return fetchUtil(`classes/${classItem.id}/ratings`);
+        })
+    );
+
+    const classesWithRatings: ClassWithRatings[] = classesData.map((classItem, index) => {
+        return {
+            classItem,
+            ratings: ratingsArr[index] ?? [],
+        };
+    });
+
     return (
-        <section className='flex flex-col gap-6'>
+        <section className='flex flex-col'>
             {randomClass && (
                 <section className='px-5 pb-5'>
                     <ClassesCard
                         title={randomClass.className}
                         imgUrl={randomClass.asset.url}
                         id={randomClass.id}
+                        rating={randomRoundedRating}
                         heroCard={true}
                     />
                 </section>
             )}
             <section className=''>
                 <h3 className='px-4'>Classes for You</h3>
-                <div className='grid grid-flow-col auto-cols-[128px] gap-4 p-4 overflow-scroll scrollbar-hide'>
-                    {classesData.map(async (classItem: ClassesType) => {
-                        const ratingsData = await fetchUtil(`classes/${classItem.id}/ratings`);
-
-                        console.log('ratings', ratingsData);
-
-                        const avgRating = ratingsData.length
-                            ? ratingsData.reduce(
-                                  (sum: number, current: RatingType) => sum + current.rating,
-                                  0
-                              ) / ratingsData.length
-                            : 0;
-
-                        const roundedRating = Math.ceil(avgRating);
-
-                        console.log('average rating', avgRating);
-
-                        return (
-                            <ClassesCard
-                                key={classItem.className + classItem.id}
-                                title={classItem.className}
-                                imgUrl={classItem.asset.url}
-                                id={classItem.id}
-                                rating={roundedRating}
-                            />
-                        );
-                    })}
-                </div>
+                <ClassesCardListClient classWithRatings={classesWithRatings} />
             </section>
         </section>
     );

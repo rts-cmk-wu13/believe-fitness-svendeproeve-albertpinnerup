@@ -89,16 +89,19 @@ export async function signUpAction(
         };
     }
 
-    if (result.data.rememberMe === 'on') {
+    if (result.data.rememberMe) {
         const { accessToken, userId, expiresIn } = await createAccessToken(
             result.data.username,
             result.data.password
         );
+
+        const validUntil = new Date(expiresIn);
+
         cookieStore.set('accessToken', accessToken, {
-            expires: expiresIn ? new Date(Date.now() + expiresIn * 1000) : undefined,
+            expires: validUntil,
         });
         cookieStore.set('userId', String(userId), {
-            expires: expiresIn ? new Date(Date.now() + expiresIn * 1000) : undefined,
+            expires: validUntil,
         });
 
         redirect('/profile');
@@ -125,7 +128,7 @@ export async function logInAction(_prevState: LogInState, formData: FormData): P
     if (!result.success) {
         const zodError = z.treeifyError(result.error);
 
-        console.log('Zod validation error:', zodError);
+        console.log('Zod validation error:', zodError.properties?.rememberMe);
         return {
             success: false,
             fieldErrors: {
@@ -145,17 +148,15 @@ export async function logInAction(_prevState: LogInState, formData: FormData): P
             result.data.password
         );
 
-        const maxAge = Math.floor(expiresIn / 1000);
-        const expires = new Date(Number(expiresIn * 1000) + Date.now());
-
+        const validUntil = new Date(expiresIn);
         if (rememberMe) {
             cookieStore.set('accessToken', accessToken, {
-                maxAge: maxAge,
                 path: '/',
+                expires: validUntil,
             });
             cookieStore.set('userId', String(userId), {
-                maxAge: maxAge,
                 path: '/',
+                expires: validUntil,
             });
         } else {
             cookieStore.set('accessToken', accessToken, { path: '/' });

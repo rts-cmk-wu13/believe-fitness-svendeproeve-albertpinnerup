@@ -24,7 +24,7 @@ export default async function toggleClassParticipation({
     const method = join ? 'POST' : 'DELETE';
 
     const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/users/${userId}/classes/${Number(classId)}`,
+        `${process.env.API_URL}/users/${userId}/classes/${Number(classId)}`,
         {
             method: method,
             headers: {

@@ -12,7 +12,8 @@ export default function MainLayout({
     isAuthenticated: boolean;
 }>) {
     const pathName = usePathname();
-    const isActive = (href: string) => pathName === href || pathName.includes(`${href}/`);
+    const isActive = (href: string) =>
+        pathName === href || pathName.includes(`${href}/`) || pathName.startsWith('/classes/');
     return (
         <SidebarProvider defaultOpen={false}>
             <MenuClient isAuthentictated={isAuthenticated} />

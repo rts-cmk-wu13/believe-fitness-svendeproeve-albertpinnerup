@@ -1,5 +1,5 @@
 'use client';
-import { TextAlignEnd, X } from 'lucide-react';
+import { ArrowLeft, ChevronLeft, TextAlignEnd, X } from 'lucide-react';
 
 import {
     SidebarContent,
@@ -11,7 +11,7 @@ import {
     SidebarMenuButton,
 } from './ui/sidebar';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 type NavItem = {
     id: string;
@@ -30,16 +30,30 @@ const navItems: NavItem[] = [
 export default function MenuClient({ isAuthentictated }: { isAuthentictated: boolean }) {
     const { toggleSidebar, setOpenMobile } = useSidebar();
     const pathName = usePathname();
+    const router = useRouter();
+    const pathnameArr = pathName.split('/');
     const isActive = (href: string) => pathName === href || pathName.includes(`${href}/`);
 
     const currentPage = navItems.find((item: NavItem) => item.href === pathName);
 
-    const openMenuIconColor = pathName.includes('/dashboard') ? '#fff' : '#9E9E9E';
+    const openMenuIconColor =
+        pathName.includes('/dashboard') || pathName.startsWith('/classes/') ? '#fff' : '#9E9E9E';
     return (
         <>
             <div className='absolute w-full px-5 py-6 z-50 flex justify-between'>
-                {!isActive('/dashboard') && <h3 className='font-normal'>{currentPage?.label}</h3>}
-
+                {!isActive('/dashboard') && (
+                    <div>
+                        {pathnameArr.length > 2 && (
+                            <ArrowLeft
+                                size={30}
+                                onClick={() => router.back()}
+                                className='z-20  relative'
+                                color={openMenuIconColor}
+                            />
+                        )}
+                        <h3 className='font-normal'>{currentPage?.label}</h3>
+                    </div>
+                )}
                 <button onClick={toggleSidebar} className='ml-auto'>
                     <TextAlignEnd color={openMenuIconColor} />
                 </button>
@@ -56,8 +70,6 @@ export default function MenuClient({ isAuthentictated }: { isAuthentictated: boo
                                 const active = isActive(item.href);
 
                                 const disabled = !isAuthentictated && item.href === '/profile';
-
-                                console.log('should profile be disabled', disabled);
 
                                 if (disabled) return;
 
