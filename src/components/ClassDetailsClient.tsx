@@ -1,5 +1,6 @@
 'use client';
 import { Button } from '@/components/ui/button';
+import toggleClassParticipation from '@/lib/actions/signUpClassAction';
 import { ClassesType } from '@/lib/types';
 import Image from 'next/image';
 import { useState, useTransition } from 'react';

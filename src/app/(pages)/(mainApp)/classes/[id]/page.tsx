@@ -22,7 +22,8 @@ export default async function classesDetailsPage({ params }: { params: Promise<{
     }
     const userId = cookieStore.get('userId')?.value;
 
-    // const initialJoinedState = classSingle?.users?.some((user) => user.id === Number(userId)) || false;
+    const initialJoinedState =
+        classSingle?.users?.some((user) => user.id === Number(userId)) || false;
 
     return <h1>{id} classes details</h1>;
 }

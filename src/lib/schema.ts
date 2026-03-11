@@ -26,13 +26,10 @@ export type ContactFormErrors = {
 
 export const userSchema = z.object({
     username: z.string().min(3, { message: 'Username must be at least 3 characters' }),
-    password: z.string().min(6, { message: 'Password must be at least 6 characters' }),
+    password: z.string().min(4, { message: 'Password must be at least 6 characters' }),
     userFirstName: z.string().min(2, { message: 'First name must be at least 2 characters' }),
     userLastName: z.string().min(2, { message: 'Last name must be at least 2 characters' }),
-    rememberMe: z.boolean().optional(),
-    role: z.enum(['default', 'admin'], {
-        message: 'Role must be either default or admin',
-    }),
+    rememberMe: z.string().optional(),
 });
 
 export type UserFormData = z.infer<typeof userSchema>;
@@ -42,5 +39,17 @@ export type SignUpErrors = {
     password?: FieldError;
     userFirstName?: FieldError;
     userLastName?: FieldError;
-    role?: FieldError;
+};
+
+export const logInSchema = z.object({
+    username: z.string().min(3, { message: 'Username must be at least 3 characters' }),
+    password: z.string().min(4, { message: 'Password must be at least 6 characters' }),
+    rememberMe: z.boolean().optional(),
+});
+
+export type LogInData = z.infer<typeof logInSchema>;
+
+export type LogInErrors = {
+    username?: FieldError;
+    password?: FieldError;
 };

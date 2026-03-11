@@ -1,20 +1,21 @@
 'use client';
-
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import '@/app/globals.css';
-import Menu from '@/components/Menu';
 import { usePathname } from 'next/navigation';
+import MenuClient from '@/components/MenuClient';
 
 export default function MainLayout({
     children,
+    isAuthenticated,
 }: Readonly<{
     children: React.ReactNode;
+    isAuthenticated: boolean;
 }>) {
     const pathName = usePathname();
     const isActive = (href: string) => pathName === href || pathName.includes(`${href}/`);
     return (
         <SidebarProvider defaultOpen={false}>
-            <Menu />
+            <MenuClient isAuthentictated={isAuthenticated} />
             {/* <SidebarTrigger /> */}
             <SidebarInset className={isActive('/dashboard') ? 'mt-0' : 'mt-[76px]'}>
                 {children}

@@ -3,9 +3,11 @@ import heroImage from '../../public/welcome.jpg';
 import Link from 'next/link';
 import { Button } from './ui/button';
 import { fetchUtil } from '@/lib/utils';
+import { checkAuthentication } from '@/lib/auth';
 
 export default async function DashboardHero() {
     const articles = await fetchUtil('news');
+    const isAuthenticated = await checkAuthentication();
 
     console.log(articles);
     return (
@@ -18,9 +20,11 @@ export default async function DashboardHero() {
                         <Link href='/classes'>
                             <Button>CLASSES</Button>
                         </Link>
-                        <Link href='/login'>
-                            <Button>LOG IN</Button>
-                        </Link>
+                        {!isAuthenticated && (
+                            <Link href='/login'>
+                                <Button>LOG IN</Button>
+                            </Link>
+                        )}
                     </div>
                 </div>
                 <Image src={heroImage} alt='hero image' fill objectFit='cover' preload />

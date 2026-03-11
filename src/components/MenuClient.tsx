@@ -27,7 +27,7 @@ const navItems: NavItem[] = [
     { id: 'logout', label: 'Log Out', href: '/login' },
 ];
 
-export default function Menu() {
+export default function MenuClient({ isAuthentictated }: { isAuthentictated: boolean }) {
     const { toggleSidebar, setOpenMobile } = useSidebar();
     const pathName = usePathname();
     const isActive = (href: string) => pathName === href || pathName.includes(`${href}/`);
@@ -54,6 +54,13 @@ export default function Menu() {
                         <SidebarMenu className='items-center gap-6'>
                             {navItems.map((item: NavItem) => {
                                 const active = isActive(item.href);
+
+                                const disabled = !isAuthentictated && item.href === '/profile';
+
+                                console.log('should profile be disabled', disabled);
+
+                                if (disabled) return;
+
                                 return (
                                     <SidebarMenuItem key={item.id}>
                                         <SidebarMenuButton
@@ -64,7 +71,9 @@ export default function Menu() {
                                                 <h3
                                                     className={`${active ? 'font-bold' : 'font-normal'}`}
                                                 >
-                                                    {item.label}
+                                                    {!isAuthentictated && item.id === 'logout'
+                                                        ? 'Log In'
+                                                        : item.label}
                                                 </h3>
                                             </Link>
                                         </SidebarMenuButton>
