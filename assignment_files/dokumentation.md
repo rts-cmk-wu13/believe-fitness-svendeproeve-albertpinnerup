@@ -33,6 +33,12 @@ Samtidig gør TypeScript det meget nemmere at arbejde på andres kode samt at re
   runtime type validering. Bruges til at lave error messages og type validere formularer. Da typescript kun kører ved buildtime, så er zod rigtig rart at have, så der ikke bliver sendt 'ulovlig' data til ens formularer.
   Jeg har valgt Zod, fremfor andre biblioteker som f.eks. yup, da Zod er bygget TIL typescript og ikke som en eftertanke. Dette gør at jeg kan bruge mine schemas som en "single source of truth", så jeg ikke skal holde både types og schemas i sync.
 
+- React Toastify
+  Toastify er bibliotek der gør det nemt at lave toasts, så brugeren får en god respons når de bruger appen. Jeg bruger det kun til contact form og news letter signup, da jeg ikke har fundet det relevant andre steder.
+
+- Lucide
+  Lucide er et icon bibliotek - det er pakke der blev installeret sammen med NextJS, men jeg syntes det er fedt hvor nemt de har gjort det at style SVG'er.
+
 ## Valgfri opgave
 
 Jeg har valgt at løse valgfri opgave B
@@ -120,4 +126,5 @@ dette er koden til min classes details page.
 Jeg "passer" alle disse variabler som props til ClassesDetailsClient komponentet.
 Jeg gør det på denne måde da ActivityDetailsClient komponentet gør brug af useActionState. Til at starte med brugte jeg state (destruktureret ud af useActionState) til at checke hvor vidt brugeren havde tilmeldt sig den givne aktivitet. Det gik hurtigt op mig at state blev nulstillet på hvert reload og at det derfor ikke stemte overens med back-enden. derfor checker jeg nu på serveren hvor vidt brugereren er tilmeldt en aktivitet, og passer true eller false til useActionStates, initialState.
 Den løsning viste sig også at gøre koden mere overskuelig, da jeg før brugte en useEffect med en async IIFE (immediately invoked function expression) til at initialisere alle mine variabler (noget rod).
+
 
