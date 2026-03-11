@@ -1,5 +1,7 @@
 //news type
 
+import { UserFormData } from './schema';
+
 export type NewsType = {
     text: string;
     assetId: number;
@@ -24,10 +26,19 @@ export type ClassesType = {
     maxParticipants: number;
     trainer: TrainerType;
     trainerId: number;
+    users: UserType[];
 };
 
 export type TrainerType = {
     assetId: number;
     id: number;
     trainerNamer: string;
+};
+
+export type UserType = Omit<UserFormData, 'rememberMe' | 'password'> & {
+    roster: {
+        classId: number;
+        userId: number;
+    };
+    id: number;
 };
