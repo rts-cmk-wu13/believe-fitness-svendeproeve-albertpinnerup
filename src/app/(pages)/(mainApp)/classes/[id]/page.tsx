@@ -53,6 +53,7 @@ export default async function classesDetailsPage({ params }: { params: Promise<{
 
     return (
         <ClassDetailsClient
+            user={user}
             classSingle={classSingle}
             classId={classId}
             initialJoinedState={initialJoinedState}

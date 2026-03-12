@@ -70,35 +70,37 @@ export default function LogInForm({ isAuthenticated }: { isAuthenticated: boolea
             </section>
         );
     }
-    return (
-        <section className='h-screen absolute top-0 justify-center flex flex-col w-full px-5 py-4 gap-4'>
-            <Button onClick={() => setShowModal(true)}>LOG OUT</Button>
-            {showModal &&
-                createPortal(
-                    <div className='h-screen w-screen fixed top-0 left-0 bg-black/50 flex items-center justify-center z-50'>
-                        <div className='bg-background p-6 m-5 rounded-lg flex flex-col items-center gap-4'>
-                            <h4 className='text-primary font-medium'>
-                                Are you sure you want to log out?
-                            </h4>
-                            <div className='flex gap-4'>
-                                <Button
-                                    variant='outline'
-                                    className='text-primary'
-                                    onClick={() => setShowModal(false)}
-                                >
-                                    CANCEL
-                                </Button>
-                                <Button
-                                    variant='destructive'
-                                    onClick={() => startTransition(() => logOutAction())}
-                                >
-                                    LOG OUT
-                                </Button>
-                            </div>
-                        </div>
-                    </div>,
-                    document.body
-                )}
-        </section>
-    );
+    // return (
+    //     <section className='h-screen absolute top-0 justify-center flex flex-col w-full px-5 py-4 gap-4'>
+    //         <Button onClick={() => setShowModal(true)}>LOG OUT</Button>
+    //         {showModal &&
+    //             createPortal(
+    //                 <div className='h-screen w-screen fixed top-0 left-0 bg-black/50 flex items-center justify-center z-50'>
+    //                     <div className='bg-background p-6 m-5 rounded-lg flex flex-col items-center gap-4'>
+    //                         <h4 className='text-primary font-medium'>
+    //                             Are you sure you want to log out?
+    //                         </h4>
+    //                         <div className='flex gap-4'>
+    //                             <Button
+    //                                 variant='outline'
+    //                                 className='text-primary'
+    //                                 onClick={() => setShowModal(false)}
+    //                             >
+    //                                 CANCEL
+    //                             </Button>
+    //                             <Button
+    //                                 variant='destructive'
+    //                                 onClick={() => startTransition(() => logOutAction())}
+    //                             >
+    //                                 LOG OUT
+    //                             </Button>
+    //                         </div>
+    //                     </div>
+    //                 </div>,
+    //                 document.body
+    //             )}
+    //     </section>
+    // );
+
+    return null;
 }

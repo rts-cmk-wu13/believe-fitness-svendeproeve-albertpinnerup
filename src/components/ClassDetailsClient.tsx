@@ -1,7 +1,7 @@
 'use client';
 import { Button } from '@/components/ui/button';
 import toggleClassParticipation from '@/lib/actions/signUpClassAction';
-import { ClassesType, TrainerType } from '@/lib/types';
+import { ClassesType, TrainerType, UserType } from '@/lib/types';
 import { Star } from 'lucide-react';
 import Image from 'next/image';
 import { useState, useTransition } from 'react';
@@ -18,6 +18,7 @@ export default function ClassDetailsClient({
     rating,
     trainer,
     isAuthenticated,
+    user,
 }: {
     classSingle: ClassesType;
     classId: ClassesType['id'];
@@ -26,6 +27,7 @@ export default function ClassDetailsClient({
     isAuthenticated: boolean;
     rating: number;
     trainer: TrainerType;
+    user?: UserType;
 }) {
     const [joined, setJoined] = useState(initialJoinedState);
 
@@ -33,6 +35,8 @@ export default function ClassDetailsClient({
     const router = useRouter();
 
     const disabled = isPending || role === 'admin';
+
+    console.log('user', user);
 
     const onToggle = () => {
         const nextJoined = !joined;
@@ -99,7 +103,15 @@ export default function ClassDetailsClient({
                     <Button
                         className='z-50 w-full mt-auto'
                         variant={'secondary'}
-                        disabled={disabled}
+                        disabled={
+                            disabled ||
+                            (!joined &&
+                                classSingle.maxParticipants === classSingle?.users?.length) ||
+                            (!joined &&
+                                user?.classes.some(
+                                    (classItem) => classItem.classDay === classSingle.classDay
+                                ))
+                        }
                         onClick={onToggle}
                     >
                         {joined ? 'LEAVE CLASS' : 'SIGN UP'}

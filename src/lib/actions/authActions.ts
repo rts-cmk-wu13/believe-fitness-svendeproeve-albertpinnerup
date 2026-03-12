@@ -75,8 +75,8 @@ export async function signUpAction(
         body: new URLSearchParams({
             username: result.data.username,
             password: result.data.password,
-            userFirstname: result.data.userFirstName,
-            userLastname: result.data.userLastName,
+            userFirstName: result.data.userFirstName,
+            userLastName: result.data.userLastName,
         }).toString(),
     });
 

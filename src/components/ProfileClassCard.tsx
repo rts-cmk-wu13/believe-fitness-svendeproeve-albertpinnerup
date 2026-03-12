@@ -10,9 +10,11 @@ import Link from 'next/link';
 export default function ProfileClassCard({
     classItem,
     initialJoinedState,
+    role,
 }: {
     classItem: ClassesType;
-    initialJoinedState: boolean;
+    initialJoinedState?: boolean;
+    role?: 'admin' | 'default';
 }) {
     const [joined, setJoined] = useState(initialJoinedState);
 
@@ -31,6 +33,25 @@ export default function ProfileClassCard({
             }
         });
     };
+
+    if (role === 'admin') {
+        return (
+            <section className='rounded-2xl border p-5 flex flex-col gap-2 border-[#9E9E9E] '>
+                <h3>{classItem.className}</h3>
+                <p>
+                    {classItem.classDay} - {classItem.classTime}
+                </p>
+                <div className='flex justify-between'>
+                    <Button>
+                        <Link href={`/participants/${classItem.id}`}>PARTICPANTS</Link>
+                    </Button>
+                    <Button disabled={isPending} onClick={onToggle}>
+                        LEAVE
+                    </Button>
+                </div>
+            </section>
+        );
+    }
 
     return (
         <>

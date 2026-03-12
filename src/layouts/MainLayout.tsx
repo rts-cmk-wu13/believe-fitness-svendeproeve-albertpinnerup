@@ -16,7 +16,7 @@ export default function MainLayout({
         pathName === href || pathName.includes(`${href}/`) || pathName.startsWith('/classes/');
     return (
         <SidebarProvider defaultOpen={false}>
-            <MenuClient isAuthentictated={isAuthenticated} />
+            <MenuClient isAuthenticated={isAuthenticated} />
             {/* <SidebarTrigger /> */}
             <SidebarInset className={isActive('/dashboard') ? 'mt-0' : 'mt-[76px]'}>
                 {children}
