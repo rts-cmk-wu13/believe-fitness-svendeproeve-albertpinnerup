@@ -11,22 +11,17 @@ export default async function classesDetailsPage({ params }: { params: Promise<{
     const cookieStore = await cookies();
 
     const classId = Number(id);
-
     if (!Number.isInteger(classId) || classId <= 0) {
         notFound();
     }
 
     const classSingle: ClassesType = await fetchUtil(`classes/${String(classId)}`);
 
-    console.log('single class', classSingle);
-
-    if (!classSingle?.id) {
+    if (!classSingle.id || !classSingle.users) {
         notFound();
     }
+
     const userId = cookieStore.get('userId')?.value;
-
-    /* const user = await getUser(); */
-
     const isAuthenticated = await checkAuthentication();
 
     let user;
@@ -34,11 +29,12 @@ export default async function classesDetailsPage({ params }: { params: Promise<{
     if (isAuthenticated) {
         user = await getUser();
     } else {
-        user = 'default';
+        user = {
+            role: 'default',
+        };
     }
 
-    const initialJoinedState =
-        classSingle?.users?.some((user) => user.id === Number(userId)) || false;
+    const initialJoinedState = classSingle?.users?.some((user) => user.id === Number(userId));
 
     const ratingsData = await fetchUtil(`classes/${classId}/ratings`);
 
@@ -51,8 +47,13 @@ export default async function classesDetailsPage({ params }: { params: Promise<{
 
     const trainer: TrainerType = await fetchUtil(`trainers/${classSingle.trainerId}`);
 
+    if (!trainer) {
+        notFound();
+    }
+
     return (
         <ClassDetailsClient
+            user={user}
             classSingle={classSingle}
             classId={classId}
             initialJoinedState={initialJoinedState}

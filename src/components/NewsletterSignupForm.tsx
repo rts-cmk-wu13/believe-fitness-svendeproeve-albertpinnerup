@@ -15,7 +15,7 @@ export default function NewsletterSignUp() {
 
     useEffect(() => {
         if (state.success) {
-            toast.success('Du er nu tilmeldt vores nyhedsbrev!');
+            toast.success('You have successfully subscribed to our newsletter!');
         }
     }, [state.success]);
 
@@ -27,7 +27,7 @@ export default function NewsletterSignUp() {
                 <input
                     type='email'
                     name='email'
-                    placeholder='Indtast din email...'
+                    placeholder='Enter your email...'
                     className='border border-gray-300 w-full rounded-full py-3 px-5 focus:outline-none focus:ring-2 focus:ring-blue-500'
                     required
                 />

@@ -32,22 +32,24 @@ export default async function ClassesPage() {
     });
 
     return (
-        <section className='flex flex-col'>
-            {randomClass && (
-                <section className='px-5 pb-5'>
-                    <ClassesCard
-                        title={randomClass.className}
-                        imgUrl={randomClass.asset.url}
-                        id={randomClass.id}
-                        rating={randomRoundedRating}
-                        heroCard={true}
-                    />
+        <>
+            <section className='flex flex-col'>
+                {randomClass && (
+                    <section className='px-5 pb-5'>
+                        <ClassesCard
+                            title={randomClass.className}
+                            imgUrl={randomClass.asset.url}
+                            id={randomClass.id}
+                            rating={randomRoundedRating}
+                            heroCard={true}
+                        />
+                    </section>
+                )}
+                <section className=''>
+                    <h3 className='px-4'>Classes for You</h3>
+                    <ClassesCardListClient classWithRatings={classesWithRatings} />
                 </section>
-            )}
-            <section className=''>
-                <h3 className='px-4'>Classes for You</h3>
-                <ClassesCardListClient classWithRatings={classesWithRatings} />
             </section>
-        </section>
+        </>
     );
 }

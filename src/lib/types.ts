@@ -26,7 +26,7 @@ export type ClassesType = {
     maxParticipants: number;
     trainer: TrainerType;
     trainerId: number;
-    users: UserType[];
+    users?: UserType[];
 };
 
 export type ClassWithRatings = {
@@ -35,11 +35,18 @@ export type ClassWithRatings = {
 };
 
 export type UserType = Omit<UserFormData, 'rememberMe' | 'password'> & {
-    roster: {
+    Roster?: {
         classId: number;
         userId: number;
     };
+    classes: (Omit<ClassesType, 'users'> & {
+        Roster: {
+            classId: number;
+            userId: number;
+        };
+    })[];
     id: number;
+    role?: 'default' | 'admin';
 };
 
 export type RatingType = {

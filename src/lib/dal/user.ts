@@ -16,6 +16,8 @@ export default async function getUser() {
     });
 
     if (!response.ok) {
+        cookieStore.delete('userId');
+        cookieStore.delete('accessToken');
         redirect('/login');
     }
 

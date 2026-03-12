@@ -4,7 +4,6 @@ import { useState } from 'react';
 import SearchBar from './SearchBar';
 import ClassesCardListClient from './ClassesCardList';
 import TrainersCard from './TrainersCard';
-import { merge } from '@/lib/utils';
 
 export default function SearchClient({
     classes,
