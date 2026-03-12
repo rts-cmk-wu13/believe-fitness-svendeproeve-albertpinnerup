@@ -17,7 +17,7 @@ export default function ContactForm() {
 
     useEffect(() => {
         if (state.success) {
-            toast.success('Din besked er sendt! Vi vender tilbage til dig så hurtigt som muligt.');
+            toast.success('Your message has been sent successfully!');
         }
     }, [state.success]);
 
@@ -33,7 +33,7 @@ export default function ContactForm() {
                 <input
                     type='text'
                     name='name'
-                    placeholder='Enter ypur name...'
+                    placeholder='Enter your name...'
                     className='border border-gray-300 leading-6 w-full rounded-full py-3 px-5 focus:outline-none focus:ring-2 focus:ring-blue-500'
                     required
                 />
@@ -52,7 +52,7 @@ export default function ContactForm() {
                 )}
                 <textarea
                     name='message'
-                    placeholder='Enter your message...'
+                    placeholder='Enter your Message...'
                     className='border border-gray-300 w-full min-h-24 rounded-[24px] py-3 px-5 focus:outline-none focus:ring-2 focus:ring-blue-500'
                     required
                 />

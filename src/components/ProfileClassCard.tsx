@@ -42,12 +42,9 @@ export default function ProfileClassCard({
                     {classItem.classDay} - {classItem.classTime}
                 </p>
                 <div className='flex justify-between'>
-                    <Button>
-                        <Link href={`/participants/${classItem.id}`}>PARTICPANTS</Link>
-                    </Button>
-                    <Button disabled={isPending} onClick={onToggle}>
-                        LEAVE
-                    </Button>
+                    <Link href={`/profile/participants/${classItem.id}`}>
+                        <Button>PARTICPANTS </Button>
+                    </Link>
                 </div>
             </section>
         );

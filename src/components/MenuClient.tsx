@@ -46,7 +46,10 @@ export default function MenuClient({ isAuthenticated }: { isAuthenticated: boole
         pathName.includes('/dashboard') || pathName.startsWith('/classes/') ? '#fff' : '#9E9E9E';
 
     const pagesWithBackButton =
-        pathName.includes('/search') || pathName.includes('profile') || pathNameArr.length > 2;
+        pathName.includes('/search') ||
+        pathName.includes('profile') ||
+        pathName.includes('/classes') ||
+        pathNameArr.length > 2;
     return (
         <>
             <header className='absolute w-full px-5 py-6 z-50 flex justify-between'>

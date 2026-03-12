@@ -4,6 +4,7 @@ import { checkAuthentication } from '@/lib/auth';
 import getUser from '@/lib/dal/user';
 import { ClassesType, UserType } from '@/lib/types';
 import { fetchUtil } from '@/lib/utils';
+import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
 export default async function profilePage() {
@@ -20,10 +21,9 @@ export default async function profilePage() {
     console.log('user', user);
 
     return (
-        <section className='px-5 flex flex-col gap-4'>
+        <section className='px-5 flex flex-col gap-4 mb-5'>
             <ProfileCard user={user} />
-            {user.classes.length > 0 &&
-                user.role !== 'admin' &&
+            {user.role !== 'admin' && user.classes.length > 0 ? (
                 user.classes.map((classItem) => {
                     const initialJoinedState = classItem.Roster?.userId === user.id;
 
@@ -38,7 +38,21 @@ export default async function profilePage() {
                             initialJoinedState={initialJoinedState}
                         />
                     );
-                })}
+                })
+            ) : (
+                <section className='text-center flex-col flex gap-4'>
+                    <h3>You're not signed up to any classes...</h3>
+                    <h4 className='font-medium'>
+                        Go to
+                        <span>
+                            <Link className='text-secondary mx-2 underline' href={'/classes'}>
+                                Classes
+                            </Link>
+                            to see start your Believe fitness journey!
+                        </span>
+                    </h4>
+                </section>
+            )}
             {user.role === 'admin' &&
                 allClasses.map((classItem) => {
                     return (
