@@ -31,19 +31,22 @@ export default function MenuClient({ isAuthentictated }: { isAuthentictated: boo
     const { toggleSidebar, setOpenMobile } = useSidebar();
     const pathName = usePathname();
     const router = useRouter();
-    const pathnameArr = pathName.split('/');
+    const pathNameArr = pathName.split('/');
     const isActive = (href: string) => pathName === href || pathName.includes(`${href}/`);
 
     const currentPage = navItems.find((item: NavItem) => item.href === pathName);
 
     const openMenuIconColor =
         pathName.includes('/dashboard') || pathName.startsWith('/classes/') ? '#fff' : '#9E9E9E';
+
+    const pagesWithBackButton =
+        pathName.includes('/search') || pathName.includes('profile') || pathNameArr.length > 2;
     return (
         <>
             <div className='absolute w-full px-5 py-6 z-50 flex justify-between'>
                 {!isActive('/dashboard') && (
                     <div className='flex items-center gap-2'>
-                        {(pathnameArr.length > 2 || pathName.includes('/search')) && (
+                        {pagesWithBackButton && (
                             <ArrowLeft
                                 size={24}
                                 onClick={() => router.back()}

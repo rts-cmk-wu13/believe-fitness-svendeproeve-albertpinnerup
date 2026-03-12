@@ -1,4 +1,5 @@
 'use server';
+import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 
 export type ToggleClassParticipationResult = {
@@ -31,6 +32,7 @@ export default async function toggleClassParticipation({
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${accessToken}`,
             },
+            cache: 'no-store',
         }
     );
 
@@ -39,6 +41,9 @@ export default async function toggleClassParticipation({
     //         joined: input.join, // Return the original state if the request fails
     //     };
     // }
+
+    revalidatePath('/profile');
+    revalidatePath('/classes');
 
     return {
         ok: response.ok,

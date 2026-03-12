@@ -11,22 +11,17 @@ export default async function classesDetailsPage({ params }: { params: Promise<{
     const cookieStore = await cookies();
 
     const classId = Number(id);
-
     if (!Number.isInteger(classId) || classId <= 0) {
         notFound();
     }
 
     const classSingle: ClassesType = await fetchUtil(`classes/${String(classId)}`);
 
-    console.log('single class', classSingle);
-
     if (!classSingle?.id) {
         notFound();
     }
+
     const userId = cookieStore.get('userId')?.value;
-
-    /* const user = await getUser(); */
-
     const isAuthenticated = await checkAuthentication();
 
     let user;
