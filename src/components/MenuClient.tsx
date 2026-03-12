@@ -1,5 +1,5 @@
 'use client';
-import { ArrowLeft, ChevronLeft, TextAlignEnd, X } from 'lucide-react';
+import { ArrowLeft, TextAlignEnd, X } from 'lucide-react';
 
 import {
     SidebarContent,
@@ -13,8 +13,8 @@ import {
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { Button } from './ui/button';
-import { logInAction, logOutAction } from '@/lib/actions/authActions';
-import { useActionState, useTransition, useState } from 'react';
+import { logOutAction } from '@/lib/actions/authActions';
+import { useTransition, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 type NavItem = {
@@ -49,7 +49,7 @@ export default function MenuClient({ isAuthenticated }: { isAuthenticated: boole
         pathName.includes('/search') || pathName.includes('profile') || pathNameArr.length > 2;
     return (
         <>
-            <div className='absolute w-full px-5 py-6 z-50 flex justify-between'>
+            <header className='absolute w-full px-5 py-6 z-50 flex justify-between'>
                 {!isActive('/dashboard') && (
                     <div className='flex items-center gap-2'>
                         {pagesWithBackButton && (
@@ -66,7 +66,7 @@ export default function MenuClient({ isAuthenticated }: { isAuthenticated: boole
                 <button onClick={toggleSidebar} className='ml-auto'>
                     <TextAlignEnd color={openMenuIconColor} />
                 </button>
-            </div>
+            </header>
 
             <Sidebar collapsible='offcanvas' variant='inset' side='right'>
                 {/* <SidebarHeader /> */}
