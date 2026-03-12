@@ -17,7 +17,7 @@ export default async function classesDetailsPage({ params }: { params: Promise<{
 
     const classSingle: ClassesType = await fetchUtil(`classes/${String(classId)}`);
 
-    if (!classSingle?.id || !classSingle || !classSingle.users) {
+    if (!classSingle.id || !classSingle.users) {
         notFound();
     }
 
@@ -46,6 +46,10 @@ export default async function classesDetailsPage({ params }: { params: Promise<{
     const roundedRating = Math.ceil(avgRating);
 
     const trainer: TrainerType = await fetchUtil(`trainers/${classSingle.trainerId}`);
+
+    if (!trainer) {
+        notFound();
+    }
 
     return (
         <ClassDetailsClient

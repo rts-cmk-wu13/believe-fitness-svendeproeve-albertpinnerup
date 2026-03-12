@@ -64,7 +64,7 @@ export default async function classesDetailsPage({ params }: { params: Promise<{
 
     const classSingle: ClassesType = await fetchUtil(`classes/${String(classId)}`);
 
-    if (!classSingle.id || !classSingle || !classSingle.users) {
+    if (!classSingle.id || !classSingle.users) {
         notFound();
     }
 
@@ -95,7 +95,7 @@ export default async function classesDetailsPage({ params }: { params: Promise<{
     const trainer: TrainerType = await fetchUtil(`trainers/${classSingle.trainerId}`);
 
     if (!trainer) {
-        notFound()
+        notFound();
     }
 
     return (
@@ -136,12 +136,12 @@ if (!Number.isInteger(classId) || classId <= 0) {
 ```
 
 Nu deklarere og initialisere jeg classSingle. Jeg bruger en fetch hjælpe funktion jeg har skrevet, så jeg ikke skal skrive den samme URL hver gang jeg fetcher. værdien ender med at være et objekt med en ClassType data form.
-Igen et guard clause, der tjekker om classSingle har et id, om classSingle findes (undefined eller null) eller om users arrayet findes (vi er ligeglade med om arrayet er tomt, det skal bare eksistere)
+Igen et guard clause, der tjekker om classSingle har et id eller om users arrayet findes (vi er ligeglade med om arrayet er tomt, det skal bare eksistere)
 
 ```jsx
 const classSingle: ClassesType = await fetchUtil(`classes/${String(classId)}`);
 
-if (!classSingle?.id || !classSingle || !classSingle.users) {
+if (!classSingle?.id || !classSingle.users) {
         notFound();
     }
 ```
