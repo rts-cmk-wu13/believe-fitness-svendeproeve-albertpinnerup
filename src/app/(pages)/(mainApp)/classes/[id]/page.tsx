@@ -17,7 +17,7 @@ export default async function classesDetailsPage({ params }: { params: Promise<{
 
     const classSingle: ClassesType = await fetchUtil(`classes/${String(classId)}`);
 
-    if (!classSingle?.id) {
+    if (!classSingle?.id || !classSingle || !classSingle.users) {
         notFound();
     }
 
@@ -29,11 +29,12 @@ export default async function classesDetailsPage({ params }: { params: Promise<{
     if (isAuthenticated) {
         user = await getUser();
     } else {
-        user = 'default';
+        user = {
+            role: 'default',
+        };
     }
 
-    const initialJoinedState =
-        classSingle?.users?.some((user) => user.id === Number(userId)) || false;
+    const initialJoinedState = classSingle?.users?.some((user) => user.id === Number(userId));
 
     const ratingsData = await fetchUtil(`classes/${classId}/ratings`);
 
