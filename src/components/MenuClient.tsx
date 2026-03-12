@@ -14,7 +14,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { Button } from './ui/button';
 import { logOutAction } from '@/lib/actions/authActions';
-import { useTransition, useState } from 'react';
+import { useTransition, useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
 type NavItem = {
@@ -39,6 +39,10 @@ export default function MenuClient({ isAuthenticated }: { isAuthenticated: boole
     const isActive = (href: string) => pathName === href || pathName.includes(`${href}/`);
     const [_, startTransition] = useTransition();
     const [showModal, setShowModal] = useState(false);
+
+    useEffect(() => {
+        setOpenMobile(false);
+    }, [pathName]);
 
     const currentPage = navItems.find((item: NavItem) => item.href === pathName);
 
@@ -90,10 +94,7 @@ export default function MenuClient({ isAuthenticated }: { isAuthenticated: boole
                                     <SidebarMenuItem key={item.id}>
                                         <SidebarMenuButton className='text-2xl' asChild>
                                             {!isAuthenticated ? (
-                                                <Link
-                                                    href={item.href}
-                                                    onClick={() => setOpenMobile(false)}
-                                                >
+                                                <Link href={item.href}>
                                                     <h3
                                                         className={`${active ? 'font-bold' : 'font-normal'}`}
                                                     >
@@ -116,10 +117,7 @@ export default function MenuClient({ isAuthenticated }: { isAuthenticated: boole
                                                     </h3>
                                                 </button>
                                             ) : (
-                                                <Link
-                                                    href={item.href}
-                                                    onClick={() => setOpenMobile(false)}
-                                                >
+                                                <Link href={item.href}>
                                                     <h3
                                                         className={`${active ? 'font-bold' : 'font-normal'} text-2xl`}
                                                     >
@@ -154,7 +152,10 @@ export default function MenuClient({ isAuthenticated }: { isAuthenticated: boole
                                 <Button
                                     variant='outline'
                                     className='text-primary'
-                                    onClick={() => setShowModal(false)}
+                                    onClick={() => {
+                                        setShowModal(false);
+                                        setOpenMobile(true);
+                                    }}
                                 >
                                     CANCEL
                                 </Button>

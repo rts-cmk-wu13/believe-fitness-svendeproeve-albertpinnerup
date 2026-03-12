@@ -19,7 +19,7 @@ export default async function ClassesPage() {
     const randomRoundedRating = Math.ceil(randomAvg);
 
     const ratingsArr = await Promise.all(
-        Array.from(classesData, (classItem: ClassesType, i) => {
+        classesData.map((classItem: ClassesType, i) => {
             return fetchUtil(`classes/${classItem.id}/ratings`);
         })
     );

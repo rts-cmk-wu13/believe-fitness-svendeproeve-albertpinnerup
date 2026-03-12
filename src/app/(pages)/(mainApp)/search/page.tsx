@@ -10,13 +10,6 @@ export default async function SearchPage() {
         })
     );
 
-    console.log(
-        'array from method: ',
-        Array.from(classesData),
-        'vs the classesData array',
-        classesData
-    );
-
     const trainersData: TrainerType[] = await fetchUtil('trainers');
 
     return <SearchClient classes={classesData} ratingsArr={ratingsArr} trainers={trainersData} />;
