@@ -1,9 +1,7 @@
 import type { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
 import { ToastContainer } from 'react-toastify';
-import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import '@/app/globals.css';
-import Menu from '@/components/MenuClient';
 
 const poppins = Poppins({
     weight: ['300', '400', '500', '700'],
