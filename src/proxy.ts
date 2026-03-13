@@ -29,7 +29,10 @@ export async function proxy(request: NextRequest) {
         const session = await checkAuthentication();
 
         if (!session) {
-            const res = NextResponse.redirect(new URL('/login', request.url));
+            const url = request.nextUrl.clone();
+
+            url.pathname = '/login';
+            const res = NextResponse.redirect(url);
             res.cookies.delete('accessToken');
             res.cookies.delete('userId');
             return res;
@@ -37,9 +40,19 @@ export async function proxy(request: NextRequest) {
 
         return NextResponse.next();
     }
+
+    const hasVisited = request.cookies.get('hasVisited')?.value;
+
+    if (!hasVisited) {
+        const url = request.nextUrl.clone();
+
+        url.pathname = '/';
+
+        return NextResponse.redirect(url);
+    }
     return NextResponse.next();
 }
 
 export const config = {
-    matcher: ['/', '/profile/:path*', '/login'],
+    matcher: ['/:path*', '/profile/:path*', '/login'],
 };
