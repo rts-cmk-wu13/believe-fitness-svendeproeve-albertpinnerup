@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { useState, useTransition } from 'react';
 import TrainersCard from './TrainersCard';
 import { useRouter } from 'next/navigation';
+import { createPortal } from 'react-dom';
 
 const maxRating = 5;
 
@@ -30,6 +31,7 @@ export default function ClassDetailsClient({
     user?: UserType;
 }) {
     const [joined, setJoined] = useState(initialJoinedState);
+    const [showModal, setShowModal] = useState(false);
 
     const [isPending, startTransition] = useTransition();
     const router = useRouter();
@@ -40,6 +42,9 @@ export default function ClassDetailsClient({
 
     const onToggle = () => {
         const nextJoined = !joined;
+
+        console.log('nextJoined', nextJoined);
+
         startTransition(async () => {
             setJoined(nextJoined);
 
@@ -112,7 +117,7 @@ export default function ClassDetailsClient({
                                     (classItem) => classItem.classDay === classSingle.classDay
                                 ))
                         }
-                        onClick={onToggle}
+                        onClick={joined ? () => setShowModal(true) : onToggle}
                     >
                         {joined ? 'LEAVE CLASS' : 'SIGN UP'}
                     </Button>
@@ -126,6 +131,35 @@ export default function ClassDetailsClient({
                     </Button>
                 )}
             </section>
+            {showModal &&
+                createPortal(
+                    <div
+                        className='h-screen w-screen fixed top-0 left-0 bg-black/50 flex items-center justify-center z-1000'
+                        onClick={() => setShowModal(false)}
+                    >
+                        <div className='bg-background p-6 m-5 rounded-lg flex flex-col items-center gap-4 z-1000'>
+                            <h4 className='text-primary font-medium'>
+                                Are you sure you want to leave{' '}
+                                <strong>{classSingle.className}</strong>?
+                            </h4>
+                            <div className='flex gap-4'>
+                                <Button
+                                    variant='outline'
+                                    className='text-primary'
+                                    onClick={() => {
+                                        setShowModal(false);
+                                    }}
+                                >
+                                    CANCEL
+                                </Button>
+                                <Button variant='destructive' onClick={onToggle}>
+                                    LEAVE
+                                </Button>
+                            </div>
+                        </div>
+                    </div>,
+                    document.body
+                )}
         </>
     );
 }

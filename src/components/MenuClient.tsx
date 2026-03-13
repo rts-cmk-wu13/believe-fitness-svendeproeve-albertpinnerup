@@ -24,7 +24,6 @@ const navItems: NavItem[] = [
 ];
 
 export default function MenuClient({ isAuthenticated }: { isAuthenticated: boolean }) {
-    // const { toggleSidebar, setOpenMobile } = useSidebar();
     const pathName = usePathname();
     const router = useRouter();
     const pathNameArr = pathName.split('/');
@@ -34,7 +33,6 @@ export default function MenuClient({ isAuthenticated }: { isAuthenticated: boole
     const [open, setOpen] = useState(false);
 
     useEffect(() => {
-        // setOpenMobile(false);
         setOpen(false);
     }, [pathName]);
 
@@ -132,10 +130,7 @@ export default function MenuClient({ isAuthenticated }: { isAuthenticated: boole
                         className='h-screen w-screen fixed top-0 left-0 bg-black/50 flex items-center justify-center z-1000'
                         onClick={() => setShowModal(false)}
                     >
-                        <div
-                            className='bg-background p-6 m-5 rounded-lg flex flex-col items-center gap-4 z-1000'
-                            onClick={(e) => e.stopPropagation()}
-                        >
+                        <div className='bg-background p-6 m-5 rounded-lg flex flex-col items-center gap-4 z-1000'>
                             <h4 className='text-primary font-medium'>
                                 Are you sure you want to log out?
                             </h4>
@@ -145,7 +140,6 @@ export default function MenuClient({ isAuthenticated }: { isAuthenticated: boole
                                     className='text-primary'
                                     onClick={() => {
                                         setShowModal(false);
-                                        // setOpenMobile(true);
                                     }}
                                 >
                                     CANCEL
