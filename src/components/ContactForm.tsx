@@ -13,8 +13,6 @@ const initialState: ContactState = {
 export default function ContactForm() {
     const [state, formAction, isPending] = useActionState(contactAction, initialState);
 
-    console.log('Current form state:', state);
-
     useEffect(() => {
         if (state.success) {
             toast.success('Your message has been sent successfully!');

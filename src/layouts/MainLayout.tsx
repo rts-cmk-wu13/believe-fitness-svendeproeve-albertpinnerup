@@ -16,13 +16,15 @@ export default function MainLayout({
         pathName === href || pathName.includes(`${href}/`) || pathName.startsWith('/classes/');
     return (
         <>
-            <SidebarProvider defaultOpen={false}>
-                <MenuClient isAuthenticated={isAuthenticated} />
-                {/* <SidebarTrigger /> */}
-                <SidebarInset className={isActive('/dashboard') ? 'mt-0' : 'mt-[76px]'}>
-                    {children}
-                </SidebarInset>
-            </SidebarProvider>
+            {/* <SidebarProvider defaultOpen={false}> */}
+            {/*     <MenuClient isAuthenticated={isAuthenticated} /> */}
+            {/*     <SidebarInset className={isActive('/dashboard') ? 'mt-0' : 'mt-[76px]'}> */}
+            {/*         {children} */}
+            {/*     </SidebarInset> */}
+            {/* </SidebarProvider> */}
+            <MenuClient isAuthenticated={isAuthenticated} />
+
+            <main className={isActive('/dashboard') ? 'pt-0' : 'pt-[76px]'}>{children}</main>
             {pathName.includes('/dashboard') && (
                 <footer className='mb-8'>
                     <section className='flex flex-col items-center gap-2'>

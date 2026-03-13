@@ -128,7 +128,7 @@ export async function logInAction(_prevState: LogInState, formData: FormData): P
     if (!result.success) {
         const zodError = z.treeifyError(result.error);
 
-        console.log('Zod validation error:', zodError.properties?.rememberMe);
+        console.log('Zod validation error:', zodError.properties);
         return {
             success: false,
             fieldErrors: {

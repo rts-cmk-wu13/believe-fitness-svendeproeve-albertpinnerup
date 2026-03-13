@@ -1,21 +1,13 @@
 'use client';
 import { ArrowLeft, TextAlignEnd, X } from 'lucide-react';
 
-import {
-    SidebarContent,
-    SidebarGroup,
-    Sidebar,
-    useSidebar,
-    SidebarMenu,
-    SidebarMenuItem,
-    SidebarMenuButton,
-} from './ui/sidebar';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { Button } from './ui/button';
 import { logOutAction } from '@/lib/actions/authActions';
 import { useTransition, useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import { Sheet, SheetContent, SheetTitle } from './ui/sheet';
 
 type NavItem = {
     id: string;
@@ -32,16 +24,18 @@ const navItems: NavItem[] = [
 ];
 
 export default function MenuClient({ isAuthenticated }: { isAuthenticated: boolean }) {
-    const { toggleSidebar, setOpenMobile } = useSidebar();
+    // const { toggleSidebar, setOpenMobile } = useSidebar();
     const pathName = usePathname();
     const router = useRouter();
     const pathNameArr = pathName.split('/');
     const isActive = (href: string) => pathName === href || pathName.includes(`${href}/`);
     const [_, startTransition] = useTransition();
     const [showModal, setShowModal] = useState(false);
+    const [open, setOpen] = useState(false);
 
     useEffect(() => {
-        setOpenMobile(false);
+        // setOpenMobile(false);
+        setOpen(false);
     }, [pathName]);
 
     const currentPage = navItems.find((item: NavItem) => item.href === pathName);
@@ -56,7 +50,7 @@ export default function MenuClient({ isAuthenticated }: { isAuthenticated: boole
         pathNameArr.length > 2;
     return (
         <>
-            <header className='absolute w-full px-5 py-6 z-50 flex justify-between'>
+            <header className='absolute w-full top-0 px-5 py-6 z-50 flex justify-between'>
                 {!isActive('/dashboard') && (
                     <div className='flex items-center gap-2'>
                         {pagesWithBackButton && (
@@ -70,31 +64,30 @@ export default function MenuClient({ isAuthenticated }: { isAuthenticated: boole
                         <h3 className='font-normal'>{currentPage?.label}</h3>
                     </div>
                 )}
-                <button onClick={toggleSidebar} className='ml-auto'>
+                <button onClick={() => setOpen(true)} className='ml-auto'>
                     <TextAlignEnd color={openMenuIconColor} />
                 </button>
             </header>
+            <Sheet open={open} onOpenChange={setOpen}>
+                <SheetTitle className='sr-only'>Menu</SheetTitle>
+                <SheetContent showCloseButton={false} side='right' forceMount={true}>
+                    <button className='absolute z-50 right-5 top-6' onClick={() => setOpen(false)}>
+                        <X color='#9E9E9E' />
+                    </button>
+                    <div className='mt-52'>
+                        <nav>
+                            <ul className='flex flex-col gap-6 items-center text-2xl'>
+                                {navItems.map((item: NavItem) => {
+                                    const active = isActive(item.href);
 
-            <Sidebar collapsible='offcanvas' variant='inset' side='right'>
-                {/* <SidebarHeader /> */}
-                <button className='absolute z-50 right-5 top-6' onClick={toggleSidebar}>
-                    <X color='#9E9E9E' />
-                </button>
-                <SidebarContent className='mt-52'>
-                    <SidebarGroup>
-                        <SidebarMenu className='items-center gap-6'>
-                            {navItems.map((item: NavItem) => {
-                                const active = isActive(item.href);
+                                    const disabled = !isAuthenticated && item.href === '/profile';
 
-                                const disabled = !isAuthenticated && item.href === '/profile';
+                                    if (disabled) return;
 
-                                if (disabled) return;
-
-                                return (
-                                    <SidebarMenuItem key={item.id}>
-                                        <SidebarMenuButton className='text-2xl' asChild>
+                                    return (
+                                        <li key={item.id} className='text-2xl'>
                                             {!isAuthenticated ? (
-                                                <Link href={item.href}>
+                                                <Link href={item.href} className='text-2xl'>
                                                     <h3
                                                         className={`${active ? 'font-bold' : 'font-normal'}`}
                                                     >
@@ -106,18 +99,18 @@ export default function MenuClient({ isAuthenticated }: { isAuthenticated: boole
                                             ) : item.id === 'logout' ? (
                                                 <button
                                                     onClick={() => {
-                                                        setOpenMobile(false);
+                                                        setOpen(false);
                                                         setShowModal(true);
                                                     }}
                                                 >
                                                     <h3
-                                                        className={`${active ? 'font-bold' : 'font-normal'}`}
+                                                        className={`${active ? 'font-bold' : 'font-normal text-2xl'}`}
                                                     >
                                                         Log out
                                                     </h3>
                                                 </button>
                                             ) : (
-                                                <Link href={item.href}>
+                                                <Link href={item.href} className='text-2xl'>
                                                     <h3
                                                         className={`${active ? 'font-bold' : 'font-normal'} text-2xl`}
                                                     >
@@ -125,16 +118,14 @@ export default function MenuClient({ isAuthenticated }: { isAuthenticated: boole
                                                     </h3>
                                                 </Link>
                                             )}
-                                        </SidebarMenuButton>
-                                    </SidebarMenuItem>
-                                );
-                            })}
-                        </SidebarMenu>
-                    </SidebarGroup>
-                    <SidebarGroup></SidebarGroup>
-                </SidebarContent>
-                {/* <SidebarFooter /> */}
-            </Sidebar>
+                                        </li>
+                                    );
+                                })}
+                            </ul>
+                        </nav>
+                    </div>
+                </SheetContent>
+            </Sheet>
             {showModal &&
                 createPortal(
                     <div
@@ -154,7 +145,7 @@ export default function MenuClient({ isAuthenticated }: { isAuthenticated: boole
                                     className='text-primary'
                                     onClick={() => {
                                         setShowModal(false);
-                                        setOpenMobile(true);
+                                        // setOpenMobile(true);
                                     }}
                                 >
                                     CANCEL
