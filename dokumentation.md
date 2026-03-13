@@ -58,6 +58,26 @@ Jeg har også valgt at beholde sign up kanppen på details siderne, selv når br
 
 Jeg har også valgt at lave modals, hvor brugeren skal bekræfte om de vil logge ud eller forlade en class - igen er dette for at fremme UX.
 
+Jeg opdagede i ellevte time at userFirstName og userLastname manglede på den controller i backenden der opretter en bruger. Det har jeg fået fikset.
+
+~~~js
+async function createSingleUser(req, res, next) {
+    try {
+        let user = await User.create({
+            username: req.fields.username,
+            password: hashSync(req.fields.password, 15),
+            userFirtName: req.fields.userFirtName,
+            userLastName: req.fields.userLastName,
+            role: 'default',
+        });
+        res.json(user);
+    } catch (error) {
+        console.error(error);
+        res.status(500).end();
+    }
+}
+~~~
+
 ## Kode Eksempel
 
 ```jsx
@@ -295,3 +315,4 @@ Hvis ikke dette kan lade sig gøre, så kunne man rate-limit eller throttle ens 
 Der findes en masse pakker og biblioteker til dette, men det er desværre ikke noget jeg har haft tid til at implementere.
 
 Jeg har skrevet her i min dokumentation at jeg godt kan lide at gå atomiseret til værks - jeg vil dog indrømme at det er skredet lidt nogle steder, f.eks i MenuClient.tsx (når man er i et godt flow, syntes jeg det kan være svært at skulle til at skifte filkontekst). Dette er helt klart også et punkt der ville kunne blive forbedret.
+
