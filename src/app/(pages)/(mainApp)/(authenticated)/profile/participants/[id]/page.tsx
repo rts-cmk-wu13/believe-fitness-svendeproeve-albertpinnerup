@@ -18,23 +18,27 @@ export default async function participantsPage({ params }: { params: Promise<{ i
             <h3 className='font-semibold'>{classSingle.className}</h3>
             {/* Her kan du tilføje indholdet for holdoversigten baseret på id */}
             <p className='font-semibold'>Participants:</p>
-            {classSingle.users?.map((user: UserType) => {
-                if (!(user.userFirstName || user.userLastName)) return;
+            {classSingle.users && classSingle.users?.length > 0 ? (
+                classSingle.users?.map((user: UserType) => {
+                    if (!(user.userFirstName || user.userLastName)) return;
 
-                return (
-                    <div
-                        key={user.id}
-                        className='bg-white/80 border border-black py-3 px-6 rounded-full'
-                    >
-                        <p className='text-primary flex items-center gap-2'>
-                            <span>
-                                <UserIcon />
-                            </span>
-                            {user.userFirstName} {user.userLastName}
-                        </p>
-                    </div>
-                );
-            })}
+                    return (
+                        <div
+                            key={user.id}
+                            className='bg-white/80 border border-black py-3 px-6 rounded-full'
+                        >
+                            <p className='text-primary flex items-center gap-2'>
+                                <span>
+                                    <UserIcon />
+                                </span>
+                                {user.userFirstName} {user.userLastName}
+                            </p>
+                        </div>
+                    );
+                })
+            ) : (
+                <h4>There are no participants</h4>
+            )}
         </section>
     );
 }
