@@ -25,7 +25,7 @@ export default function SearchClient({
         };
     });
 
-    const filteredClasses = query
+    const filteredClasses = q
         ? classesWithRatings.filter(
               ({ classItem }) =>
                   classItem.className.toLowerCase().includes(q) ||
@@ -35,7 +35,7 @@ export default function SearchClient({
           )
         : classesWithRatings;
 
-    const filteredTrainers = query
+    const filteredTrainers = q
         ? trainers.filter((trainer) => trainer.trainerName.toLowerCase().includes(q))
         : trainers;
 

@@ -1,11 +1,14 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from './ui/button';
+import splash1 from '../../public/splash1.jpg';
+import splash2 from '../../public/splash2.png';
 
 export default function SplashScreen() {
     const randomizer = Math.floor(Math.random() * 2);
 
-    const imgUrl = randomizer ? '/splash1.jpg' : '/splash2.png';
+    // const imgUrl = randomizer ? '/splash1.jpg' : '/splash2.png';
+    const imgUrl = randomizer ? splash1 : splash2;
 
     return (
         <section className='relative z-10 p-6 pb-12 flex min-h-svh w-full flex-col items-center justify-between gap-6 overflow-hidden font-sans'>
@@ -15,6 +18,7 @@ export default function SplashScreen() {
                 fill={true}
                 className='-z-10 object-cover'
                 priority
+                unoptimized
             />
 
             <div className='w-full flex flex-col mt-auto mb-4 gap-4 z-10'>

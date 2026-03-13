@@ -45,6 +45,9 @@ export default function LogInForm({ isAuthenticated }: { isAuthenticated: boolea
                         className='border border-gray-300 leading-6 w-full rounded-full py-3 px-5 focus:outline-none focus:ring-2 focus:ring-blue-500'
                         required
                     />
+                    {state.fieldErrors.password?.errors && (
+                        <p className='text-red-500 text-sm'>{state.fieldErrors.password.errors}</p>
+                    )}
                     <div className='flex items-center gap-2 justify-center'>
                         <label htmlFor='rememberMe'>Remember me?</label>
                         <input type='checkbox' name='rememberMe' id='rememberMe' />

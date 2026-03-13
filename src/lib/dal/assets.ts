@@ -4,6 +4,10 @@ export default async function assets(id?: string) {
         method: 'GET',
     });
 
+    if (!response.ok) {
+        throw new Error(`${response.status}`, { cause: response.statusText });
+    }
+
     const data = await response.json();
 
     return data;

@@ -40,18 +40,25 @@ export default async function profilePage() {
                     );
                 })
             ) : (
-                <section className='text-center flex-col flex gap-4'>
-                    <h3>You're not signed up to any classes...</h3>
-                    <h4 className='font-medium'>
-                        Go to
-                        <span>
-                            <Link className='text-secondary mx-2 underline' href={'/classes'}>
-                                Classes
-                            </Link>
-                            to see start your Believe fitness journey!
-                        </span>
-                    </h4>
-                </section>
+                <>
+                    {user.role !== 'admin' && (
+                        <section className='text-center flex-col flex gap-4'>
+                            <h3>You're not signed up to any classes...</h3>
+                            <h4 className='font-medium'>
+                                Go to
+                                <span>
+                                    <Link
+                                        className='text-secondary mx-2 underline'
+                                        href={'/classes'}
+                                    >
+                                        Classes
+                                    </Link>
+                                    to see start your Believe fitness journey!
+                                </span>
+                            </h4>
+                        </section>
+                    )}
+                </>
             )}
             {user.role === 'admin' &&
                 allClasses.map((classItem) => {

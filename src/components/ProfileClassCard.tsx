@@ -6,6 +6,8 @@ import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import toggleClassParticipation from '@/lib/actions/signUpClassAction';
 import Link from 'next/link';
+import { logOutAction } from '@/lib/actions/authActions';
+import { createPortal } from 'react-dom';
 
 export default function ProfileClassCard({
     classItem,
@@ -18,8 +20,9 @@ export default function ProfileClassCard({
 }) {
     const [joined, setJoined] = useState(initialJoinedState);
 
+    const [showModal, setShowModal] = useState(false);
+
     const [isPending, startTransition] = useTransition();
-    const router = useRouter();
     const classId = classItem.id;
 
     const onToggle = () => {
@@ -62,12 +65,41 @@ export default function ProfileClassCard({
                         <Button>
                             <Link href={`/classes/${classItem.id}`}>SHOW CLASS</Link>
                         </Button>
-                        <Button disabled={isPending} onClick={onToggle}>
+                        <Button disabled={isPending} onClick={() => setShowModal(true)}>
                             LEAVE
                         </Button>
                     </div>
                 </section>
             )}
+            {showModal &&
+                createPortal(
+                    <div
+                        className='h-screen w-screen fixed top-0 left-0 bg-black/50 flex items-center justify-center z-1000'
+                        onClick={() => setShowModal(false)}
+                    >
+                        <div className='bg-background p-6 m-5 rounded-lg flex flex-col items-center gap-4 z-1000'>
+                            <h4 className='text-primary font-medium'>
+                                Are you sure you want to leave{' '}
+                                <strong>{classItem.className}</strong>?
+                            </h4>
+                            <div className='flex gap-4'>
+                                <Button
+                                    variant='outline'
+                                    className='text-primary'
+                                    onClick={() => {
+                                        setShowModal(false);
+                                    }}
+                                >
+                                    CANCEL
+                                </Button>
+                                <Button variant='destructive' onClick={onToggle}>
+                                    LEAVE
+                                </Button>
+                            </div>
+                        </div>
+                    </div>,
+                    document.body
+                )}
         </>
     );
 }

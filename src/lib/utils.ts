@@ -12,6 +12,10 @@ export async function fetchUtil(query: string, method?: string, id?: string) {
         method: method ? method : 'GET',
     });
 
+    if (!response.ok) {
+        throw new Error(`${response.status} ${response.statusText}`);
+    }
+
     const data = await response.json();
 
     return data;

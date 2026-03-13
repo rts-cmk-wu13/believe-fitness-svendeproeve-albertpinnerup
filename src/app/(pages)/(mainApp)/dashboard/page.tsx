@@ -8,6 +8,7 @@ import { fetchUtil } from '@/lib/utils';
 
 export default async function dashboard() {
     const articles = await fetchUtil('news');
+
     return (
         <section>
             <DashboardHero />
