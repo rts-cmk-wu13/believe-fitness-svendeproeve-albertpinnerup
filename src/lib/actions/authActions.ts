@@ -67,17 +67,21 @@ export async function signUpAction(
 
     console.log('Validation result:', result);
 
+    const payload = {
+        username: result.data.username,
+        password: result.data.password,
+        userFirstName: result.data.userFirstName,
+        userLastName: result.data.userLastName,
+    };
+
+    console.log('Payload to be sent to API:', payload);
+
     const response = await fetch(`${process.env.API_URL}/users`, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
+            'Content-Type': 'application/json',
         },
-        body: new URLSearchParams({
-            username: result.data.username,
-            password: result.data.password,
-            userFirstName: result.data.userFirstName,
-            userLastName: result.data.userLastName,
-        }).toString(),
+        body: JSON.stringify(payload),
     });
 
     if (!response.ok) {
