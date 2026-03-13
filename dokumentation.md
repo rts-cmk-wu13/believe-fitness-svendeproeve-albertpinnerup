@@ -54,7 +54,9 @@ Jeg har også valgt kun at låse "my profile" siden bag authentication - det har
 I følge kravspecifikationen skal der være en back knap på details, search og profile der leder tilbage til Home. Det har jeg valgt at fortolke lidt, så knappen leder brugeren tilbage til den side de var på før. Efter min erfaring, så er det den forventede funktionalitet af såden en knap og jeg har derfor valgt at implementere det.
 Med hensyn til splashScreen har jeg igen fortolket kravspecifikationen lidt. Jeg har valgt at gøre så splashScreen kun vises hver gang du starter en ny browser session. Dette har jeg gjort, da det igen efter min erfaring, er den forventede brugeroplevelse. Jeg ville selv blive irriteret hvis jeg skulle se en splash screen hver gang jeg åbnede den samme side, i løbet af den samme brower session.
 
-Jeg har også valgt at beholde sign up kanppen på details siderne, selv når brugeren ikke er logget ind. Hvis man ikke er logget ind leder knappen i stedet til log ind siden. Dette gør det tydeligt at man overhovedet *kan* tilmelde sig en class, men også at man skal lave en bruger/være logget ind for at gøre det. Dette tror jeg giver en bedre bruger oplevelse, end at slette ikke rendere knappen.
+Jeg har også valgt at beholde sign up kanppen på details siderne, selv når brugeren ikke er logget ind. Hvis man ikke er logget ind leder knappen i stedet til log ind siden. Dette gør det tydeligt at man overhovedet _kan_ tilmelde sig en class, men også at man skal lave en bruger/være logget ind for at gøre det. Dette tror jeg giver en bedre bruger oplevelse, end at slette ikke rendere knappen.
+
+Jeg har også valgt at lave modals, hvor brugeren skal bekræfte om de vil logge ud eller forlade en class - igen er dette for at fremme UX.
 
 ## Kode Eksempel
 
@@ -257,9 +259,9 @@ const trainer: TrainerType = await fetchUtil(`trainers/${classSingle.trainerId}`
 ```
 
 Jeg "passer" alle disse variabler som props til ClassesDetailsClient komponentet.
-Jeg gør det på denne måde da ClassDetailsClient komponentet gør brug af useActionState. 
+Jeg gør det på denne måde da ClassDetailsClient komponentet gør brug af useActionState.
 
-Til at starte med brugte jeg state (destruktureret ud af useActionState) til at checke hvor vidt brugeren havde tilmeldt sig den givne aktivitet. Det gik hurtigt op mig at state jo blev nulstillet på hvert reload og at det derfor ikke stemte overens med back-enden. 
+Til at starte med brugte jeg state (destruktureret ud af useActionState) til at checke hvor vidt brugeren havde tilmeldt sig den givne aktivitet. Det gik hurtigt op mig at state jo blev nulstillet på hvert reload og at det derfor ikke stemte overens med back-enden.
 Derfor checker jeg nu på serveren hvor vidt brugereren er tilmeldt en class, og passer true eller false til useActionStates, initialState.
 Den løsning viste sig også at gøre koden mere overskuelig, da jeg før brugte en useEffect med en async IIFE (immediately invoked function expression) til at initialisere alle mine variabler (noget rod).
 
@@ -293,4 +295,3 @@ Hvis ikke dette kan lade sig gøre, så kunne man rate-limit eller throttle ens 
 Der findes en masse pakker og biblioteker til dette, men det er desværre ikke noget jeg har haft tid til at implementere.
 
 Jeg har skrevet her i min dokumentation at jeg godt kan lide at gå atomiseret til værks - jeg vil dog indrømme at det er skredet lidt nogle steder, f.eks i MenuClient.tsx (når man er i et godt flow, syntes jeg det kan være svært at skulle til at skifte filkontekst). Dette er helt klart også et punkt der ville kunne blive forbedret.
-
