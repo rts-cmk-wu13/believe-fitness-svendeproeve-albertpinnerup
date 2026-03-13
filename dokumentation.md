@@ -37,7 +37,7 @@ Samtidig gør TypeScript det meget nemmere at arbejde på andres kode samt at re
   Toastify er bibliotek der gør det nemt at lave toasts, så brugeren får en god respons når de bruger appen. Jeg bruger det kun til contact form og news letter signup, da jeg ikke har fundet det relevant andre steder.
 
 - Lucide
-  Lucide er et icon bibliotek - det er pakke der blev installeret sammen med NextJS, men jeg syntes det er fedt hvor nemt de har gjort det at style SVG'er.
+  Lucide er et icon bibliotek - det er en pakke der blev installeret sammen med NextJS, men jeg syntes det er fedt hvor nemt de har gjort det at style SVG'er.
 
 ## Valgfri opgave
 
@@ -46,9 +46,10 @@ Jeg har valgt at løse valgfri opgave B
 ## Valg undervejs
 
 Jeg har forsøgt så vidt som muligt, at splitte logik op og strukturere projektet. Det vil sige en mappe til alle layouts (der ikke er root layout), en fil til auth helpers, en mappe til actions, route groups osv. Dette er for at nemmere at kunne holde overblik og for ikke at komme til lave spaghette kode.
-Jeg har valgt ikke at bygge UI til de komponenter der kræver at jeg løser endnu en valgfri opgave. Dette har jeg gjort for at give brugeren bedre helheds oplevelse - altså ikke lave UI der ikke kan/gør noget.
+Jeg har valgt ikke at bygge UI til de komponenter der kræver at jeg løser endnu en valgfri opgave. Dette har jeg gjort for at give brugeren en bedre helheds oplevelse - altså ikke lave UI der ikke kan/gør noget.
 Jeg har også valgt kun at låse "my profile" siden bag authentication - det har jeg gjort da jeg fandt det nemmere og mere elegant at lave conditional rendering på de komponenter og sider hvor der var enkelte ting låst bag authentication.
 I følge kravspecifikationen skal der være en back knap på details, search og profile der leder tilbage til Home. Det har jeg valgt at fortolke lidt, så knappen leder brugeren tilbage til den side de var på før. Efter min erfaring, så er det den forventede funktionalitet af såden en knap og jeg har derfor valgt at implementere det.
+Med hensyn til splashScreen har jeg igen fortolket kravspecifikationen lidt. Jeg har valgt at gøre så splashScreen kun vises hver gang du starter en ny browser session. Dette har jeg gjort, da det igen efter min erfaring, er den forventede brugeroplevelse. Jeg ville selv blive irriteret hvis jeg skulle se en splash screen hver gang jeg åbnede den samme side, i løbet af den samme brower session.
 
 ## Kode Eksempel
 
